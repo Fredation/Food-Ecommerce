@@ -1,0 +1,52 @@
+name: food_ecommerce
+description: A new Flutter project.
+
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.17.1 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.2
+  dots_indicator: ^2.1.0
+  firebase_auth: ^3.3.14
+  cloud_firestore: ^3.1.12
+  path_provider: ^2.0.10
+  intl: ^0.17.0
+  dio: ^4.0.6
+  hive: ^2.2.1
+  get_it: ^7.2.0
+  flutter_bloc: ^8.0.1
+  freezed_annotation: ^2.0.3
+  equatable: ^2.0.3
+  dartz: ^0.10.1
+  overlay_support: ^2.0.1
+  image_picker: ^0.8.5+3
+  firebase_storage: ^10.3.4
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  build_runner: ^2.1.11
+
+  freezed: ^2.0.3+1
+
+  flutter_lints: ^1.0.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/images/
+
+  fonts:
+    - family: Lato
+      fonts:
+        - asset: assets/fonts/Lato-Bold.ttf
+        - asset: assets/fonts/Lato-Regular.ttf
+          # style: italic

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "334111171960",
+    "project_id": "food-e-commerce-dd2e0",
+    "storage_bucket": "food-e-commerce-dd2e0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:334111171960:android:99eb24f7ac005a058dd48d",
+        "android_client_info": {
+          "package_name": "com.fredation.food_ecommerce"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "334111171960-o1o1issio3imdmmqkst5f4pc9cfj9dbs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCpLGbn_uI-7vfQrJleDeu1I4zvz9H1PW8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "334111171960-o1o1issio3imdmmqkst5f4pc9cfj9dbs.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
