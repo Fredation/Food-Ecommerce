@@ -97,7 +97,8 @@ class AuthDSImpl implements AuthDS {
         userData = UserData(
             email: value['email'],
             phoneNumber: value['phone_number'],
-            userName: value['username']);
+            userName: value['username'],
+            imageUrl: value['image_url']);
       });
 
       return userData;
@@ -114,6 +115,13 @@ class AuthDSImpl implements AuthDS {
           .child('user_image')
           .child(auth.currentUser!.uid + '.jpg');
       await ref.putFile(data);
+
+      final url = await ref.getDownloadURL();
+
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(auth.currentUser!.uid)
+          .update({"image_url": url});
     } catch (e) {
       rethrow;
     }

@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -112,7 +113,12 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   bool _checkLogin() {
-    return auth.currentUser != null;
+    if (auth.currentUser != null) {
+      log(auth.currentUser?.email ?? "user null");
+      return true;
+    } else {
+      return false;
+    }
   }
 }
 

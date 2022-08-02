@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_ecommerce/core/size_config/extensions.dart';
@@ -110,11 +112,12 @@ class AppDrawer extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () async {
+                log('tapped');
                 await authCubit.logout();
                 if (authCubit.state.error == null) {
                   Navigator.pushReplacementNamed(
                       context, LoginScreen.routeName);
-                }
+                } else {}
               },
               child: SizedBox(
                 child: Column(

@@ -21,8 +21,18 @@ class _ImagePickerWidgetState extends State<ImagePickerWidget> {
     final ImagePicker _picker = ImagePicker();
 
     final XFile? _image = isGallery
-        ? await _picker.pickImage(source: ImageSource.gallery)
-        : await _picker.pickImage(source: ImageSource.camera);
+        ? await _picker.pickImage(
+            source: ImageSource.gallery,
+            imageQuality: 70,
+            maxHeight: 200,
+            maxWidth: 200,
+          )
+        : await _picker.pickImage(
+            source: ImageSource.camera,
+            imageQuality: 70,
+            maxHeight: 200,
+            maxWidth: 200,
+          );
 
     setState(() {
       _pickedImage = _image;
@@ -35,38 +45,52 @@ class _ImagePickerWidgetState extends State<ImagePickerWidget> {
   }
 
   @override
+  void initState() {
+    context.read<AuthCubit>().getUserData();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    // bool? isGallery;
+    final _userImage = context.read<AuthCubit>().userData?.imageUrl;
     return Column(
       children: [
-        _pickedImage == null
-            ? const CircleAvatar(
-                backgroundImage: AssetImage(
-                  'assets/images/cartoon_chef.png',
+        _userImage != null
+            ? CircleAvatar(
+                backgroundImage: NetworkImage(
+                  _userImage,
                 ),
                 backgroundColor: Colors.transparent,
                 radius: 45,
               )
-            : CircleAvatar(
-                backgroundImage: FileImage(
-                  File(_pickedImage!.path),
-                ),
-                backgroundColor: Colors.transparent,
-                radius: 45,
-              ),
+            : _pickedImage == null
+                ? const CircleAvatar(
+                    backgroundImage: AssetImage(
+                      'assets/images/cartoon_chef.png',
+                    ),
+                    backgroundColor: Colors.transparent,
+                    radius: 45,
+                  )
+                : CircleAvatar(
+                    backgroundImage: FileImage(
+                      File(_pickedImage!.path),
+                    ),
+                    backgroundColor: Colors.transparent,
+                    radius: 45,
+                  ),
         TextButton.icon(
           style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all<Color>(Colors.transparent
                 //const Color.fromARGB(255, 161, 136, 127),
                 ),
           ),
-          onPressed: _uploadImage,
+          onPressed: _userImage == null ? _uploadImage : null,
           icon: Icon(
             Icons.image,
             color: Colors.brown[300],
           ),
           label: Text(
-            'Upload Photo',
+            _userImage == null ? 'Upload Photo' : 'Update Photo',
             style: TextStyle(
               fontFamily: 'Lato',
               fontSize: 18.width,
