@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_ecommerce/core/model/build_config.dart';
 import 'package:food_ecommerce/cubit_states.dart';
+import 'package:food_ecommerce/features/address/presentation/address_page.dart';
+import 'package:food_ecommerce/features/address/presentation/create_address.dart';
 import 'package:food_ecommerce/features/auth/presentation/login_screen.dart';
 import 'package:food_ecommerce/features/auth/presentation/sign_up_screen.dart';
 import 'package:food_ecommerce/features/cart/presentation/cart_page.dart';
@@ -48,6 +50,8 @@ class _MyAppState extends State<MyApp> {
             SignUpScreen.routeName: (ctx) => const SignUpScreen(),
             SplashScreen.routeName: (ctx) => const SplashScreen(),
             CartPage.routeName: (ctx) => const CartPage(),
+            AddressPage.routeName: (ctx) => const AddressPage(),
+            CreateAddress.routeName: (ctx) => const CreateAddress(),
             // AddProductScreen.routeName: (ctx) => AddProductScreen(),
           },
         ),

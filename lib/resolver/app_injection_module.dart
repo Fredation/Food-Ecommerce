@@ -2,6 +2,13 @@ import 'package:food_ecommerce/core/abstractions/injection_module.dart';
 import 'package:food_ecommerce/core/model/build_config.dart';
 import 'package:food_ecommerce/core/network/api.dart';
 import 'package:food_ecommerce/core/storage/storage.dart';
+import 'package:food_ecommerce/features/address/data/datasources/address_ds.dart';
+import 'package:food_ecommerce/features/address/data/repositories/address_repo_impl.dart';
+import 'package:food_ecommerce/features/address/domain/reposiory/address_repo.dart';
+import 'package:food_ecommerce/features/address/domain/usecases/create_address_usecase.dart';
+import 'package:food_ecommerce/features/address/domain/usecases/delete_address_usecase.dart';
+import 'package:food_ecommerce/features/address/domain/usecases/get_addresses_usecase.dart';
+import 'package:food_ecommerce/features/address/presentation/state/address_cubit.dart';
 import 'package:food_ecommerce/features/auth/data/datasources/auth_ds.dart';
 import 'package:food_ecommerce/features/auth/data/repositories/auth_repo_impl.dart';
 import 'package:food_ecommerce/features/auth/domain/repositories/auth_repo.dart';
@@ -58,6 +65,13 @@ class AppInjectionModule implements InjectionModule {
         removeFromCartUsecase: injector.get(),
       ),
     );
+    injector.registerFactory(
+      () => AddressCubit(
+        createAddressUsecase: injector.get(),
+        getAddressesUsecase: injector.get(),
+        deleteAddressUsecase: injector.get(),
+      ),
+    );
 
     //usecases
     injector.registerLazySingleton(() => RegisterUsecase(injector()));
@@ -71,6 +85,9 @@ class AppInjectionModule implements InjectionModule {
     injector.registerLazySingleton(() => AddToCartUsecase(injector()));
     injector.registerLazySingleton(() => RemoveFromCartUsecase(injector()));
     injector.registerLazySingleton(() => GetCartUsecase(injector()));
+    injector.registerLazySingleton(() => CreateAddressUsecase(injector()));
+    injector.registerLazySingleton(() => GetAddressesUsecase(injector()));
+    injector.registerLazySingleton(() => DeleteAddressUsecase(injector()));
 
     //repositories
     injector.registerLazySingleton<AuthRepo>(
@@ -82,6 +99,9 @@ class AppInjectionModule implements InjectionModule {
     injector.registerLazySingleton<CartRepo>(
       () => CartRepoImpl(cartDS: injector()),
     );
+    injector.registerLazySingleton<AddressRepo>(
+      () => AddressRepoImpl(addressDS: injector()),
+    );
 
     //datasources
     injector.registerLazySingleton<AuthDS>(
@@ -92,6 +112,9 @@ class AppInjectionModule implements InjectionModule {
     );
     injector.registerLazySingleton<CartDS>(
       () => CartDSImpl(),
+    );
+    injector.registerLazySingleton<AddressDS>(
+      () => AddressDSImpl(),
     );
   }
 }

@@ -3,6 +3,8 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_ecommerce/core/size_config/extensions.dart';
+import 'package:food_ecommerce/features/address/presentation/address_page.dart';
+import 'package:food_ecommerce/features/address/presentation/state/address_cubit.dart';
 import 'package:food_ecommerce/features/auth/presentation/login_screen.dart';
 import 'package:food_ecommerce/features/auth/presentation/state/auth_cubit.dart';
 import 'package:food_ecommerce/reusables/image_picker.dart';
@@ -14,6 +16,7 @@ class AppDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     FocusScope.of(context).unfocus();
     final authCubit = context.watch<AuthCubit>();
+    final addressCubit = context.watch<AddressCubit>();
 
     return SizedBox(
       width: 257.width,
@@ -74,9 +77,15 @@ class AppDrawer extends StatelessWidget {
             Divider(
               color: Colors.black.withOpacity(.5),
             ),
-            textImage(
-              imageUrl: 'assets/images/address_icon.png',
-              text: 'My Addresses',
+            GestureDetector(
+              onTap: () async {
+                await addressCubit.getAddresses();
+                Navigator.pushNamed(context, AddressPage.routeName);
+              },
+              child: textImage(
+                imageUrl: 'assets/images/address_icon.png',
+                text: 'My Addresses',
+              ),
             ),
             Divider(
               color: Colors.black.withOpacity(.5),

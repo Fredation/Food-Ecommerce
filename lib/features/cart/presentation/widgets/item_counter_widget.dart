@@ -20,7 +20,7 @@ class _ItemCounterWidgetState extends State<ItemCounterWidget> {
       height: 40,
       padding: const EdgeInsets.all(5),
       decoration: BoxDecoration(
-        color: Theme.of(context).primaryColor.withOpacity(.05),
+        color: Colors.brown[300]!.withOpacity(.05),
         borderRadius: BorderRadius.circular(8),
       ),
       child: Row(
@@ -47,7 +47,7 @@ class _ItemCounterWidgetState extends State<ItemCounterWidget> {
               child: Icon(
                 Icons.remove,
                 size: 20,
-                color: Theme.of(context).primaryColor,
+                color: Colors.brown[300],
               ),
             ),
           ),
@@ -74,7 +74,7 @@ class _ItemCounterWidgetState extends State<ItemCounterWidget> {
               child: Icon(
                 Icons.add,
                 size: 20,
-                color: Theme.of(context).primaryColor,
+                color: Colors.brown[300],
               ),
             ),
           )
