@@ -6,6 +6,7 @@ import 'package:food_ecommerce/features/address/presentation/address_page.dart';
 import 'package:food_ecommerce/features/address/presentation/create_address.dart';
 import 'package:food_ecommerce/features/auth/presentation/login_screen.dart';
 import 'package:food_ecommerce/features/auth/presentation/sign_up_screen.dart';
+import 'package:food_ecommerce/features/auth/presentation/update_profile_page.dart';
 import 'package:food_ecommerce/features/cart/presentation/cart_page.dart';
 import 'package:food_ecommerce/features/store/presentation/meal_detail_screen.dart';
 import 'package:food_ecommerce/features/store/presentation/popular_meal_detail_screen.dart';
@@ -52,6 +53,7 @@ class _MyAppState extends State<MyApp> {
             CartPage.routeName: (ctx) => const CartPage(),
             AddressPage.routeName: (ctx) => const AddressPage(),
             CreateAddress.routeName: (ctx) => const CreateAddress(),
+            UpdateProfilePage.routeName: (ctx) => const UpdateProfilePage(),
             // AddProductScreen.routeName: (ctx) => AddProductScreen(),
           },
         ),

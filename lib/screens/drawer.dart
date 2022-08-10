@@ -7,6 +7,7 @@ import 'package:food_ecommerce/features/address/presentation/address_page.dart';
 import 'package:food_ecommerce/features/address/presentation/state/address_cubit.dart';
 import 'package:food_ecommerce/features/auth/presentation/login_screen.dart';
 import 'package:food_ecommerce/features/auth/presentation/state/auth_cubit.dart';
+import 'package:food_ecommerce/features/auth/presentation/update_profile_page.dart';
 import 'package:food_ecommerce/reusables/image_picker.dart';
 import 'package:food_ecommerce/reusables/text_image.dart';
 
@@ -70,9 +71,14 @@ class AppDrawer extends StatelessWidget {
               ),
             ),
             SizedBox(height: 10.height),
-            textImage(
-              imageUrl: 'assets/images/user_profile_icon.png',
-              text: 'My Profile',
+            GestureDetector(
+              onTap: () async {
+                Navigator.pushNamed(context, UpdateProfilePage.routeName);
+              },
+              child: textImage(
+                imageUrl: 'assets/images/user_profile_icon.png',
+                text: 'My Profile',
+              ),
             ),
             Divider(
               color: Colors.black.withOpacity(.5),

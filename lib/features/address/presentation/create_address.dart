@@ -41,6 +41,7 @@ class _CreateAddressState extends State<CreateAddress> {
     final addressCubit = context.read<AddressCubit>();
     return LoaderLayout(
       loading: addressCubit.state.isLoading,
+      overlay: true,
       child: Scaffold(
         appBar: MyAppBar(
           title: 'Add Address',

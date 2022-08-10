@@ -17,7 +17,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       backgroundColor: Colors.white,
       elevation: 0,
-      titleSpacing: 70,
+      titleSpacing: 60,
       title: Text(
         title,
         style: const TextStyle(
