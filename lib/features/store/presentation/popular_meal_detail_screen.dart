@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_ecommerce/core/size_config/extensions.dart';
+import 'package:food_ecommerce/features/cart/presentation/cart_page.dart';
+import 'package:food_ecommerce/features/cart/presentation/state/cart_cubit.dart';
 import 'package:food_ecommerce/features/store/presentation/state/store_cubit.dart';
 import 'package:food_ecommerce/features/store/presentation/widgets/expandable_text.dart';
+import 'package:food_ecommerce/reusables/my_toast.dart';
 import 'package:food_ecommerce/reusables/reusable_text_small.dart';
 import '../../../reusables/reusable_icon.dart';
 import '../../../reusables/reusable_text_big.dart';
@@ -23,8 +26,16 @@ class _PopularMealDetailScreenState extends State<PopularMealDetailScreen> {
   Widget build(BuildContext context) {
     final productId = ModalRoute.of(context)!.settings.arguments as String;
     final storeCubit = context.read<StoreCubit>();
+    final cartCubit = context.read<CartCubit>();
 
     final loadedProduct = storeCubit.findById(productId);
+    bool _isCartItem = false;
+    for (var element in cartCubit.cart) {
+      if (element.title == loadedProduct.title) {
+        _isCartItem = true;
+        setState(() {});
+      }
+    }
     return Scaffold(
       body: CustomScrollView(
         slivers: [
@@ -40,16 +51,21 @@ class _PopularMealDetailScreenState extends State<PopularMealDetailScreen> {
                     Navigator.pop(context);
                   },
                 ),
-                Container(
-                  height: 45.height,
-                  width: 45.width,
-                  padding: const EdgeInsets.all(5),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(12.height),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pushReplacementNamed(context, CartPage.routeName);
+                  },
+                  child: Container(
+                    height: 45.height,
+                    width: 45.width,
+                    padding: const EdgeInsets.all(5),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(12.height),
+                    ),
+                    child: Image.asset('assets/images/cart.png',
+                        color: Colors.brown[300]),
                   ),
-                  child: Image.asset('assets/images/cart.png',
-                      color: AppColors.mainColor),
                 ),
               ],
             ),
@@ -115,7 +131,7 @@ class _PopularMealDetailScreenState extends State<PopularMealDetailScreen> {
                   icon: Icons.remove,
                   iconSize: 20,
                   iconColor: Colors.white,
-                  backgroundColor: AppColors.mainColor,
+                  backgroundColor: const Color.fromARGB(255, 161, 136, 127),
                   backgroundSize: 35,
                   onpressed: () {
                     if (count > 1) {
@@ -132,7 +148,7 @@ class _PopularMealDetailScreenState extends State<PopularMealDetailScreen> {
                   icon: Icons.add,
                   iconSize: 20,
                   iconColor: Colors.white,
-                  backgroundColor: AppColors.mainColor,
+                  backgroundColor: const Color.fromARGB(255, 161, 136, 127),
                   backgroundSize: 35,
                   onpressed: () {
                     count++;
@@ -167,24 +183,42 @@ class _PopularMealDetailScreenState extends State<PopularMealDetailScreen> {
                     borderRadius: BorderRadius.circular(20.height),
                     color: Colors.white,
                   ),
-                  child: const Icon(
+                  child: Icon(
                     Icons.favorite,
                     size: 25,
-                    color: AppColors.mainColor,
+                    color: Colors.brown[300],
                   ),
                 ),
-                Container(
-                  height: 50.height,
-                  width: 170.width,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20.height),
-                    color: AppColors.mainColor,
-                  ),
-                  child: Center(
-                    child: ReusableTextSmall(
-                      size: 16,
-                      text: '\$${loadedProduct.price * count} | Add To Cart',
-                      color: Colors.white,
+                GestureDetector(
+                  onTap: () async {
+                    if (_isCartItem) {
+                      Navigator.pushReplacementNamed(
+                          context, CartPage.routeName);
+                    }
+                    await cartCubit.addToCart(
+                        prod: loadedProduct.copyWith(quantity: count));
+                    if (cartCubit.state.error == null) {
+                      MyToast.show(
+                          context: context,
+                          text: "Added To Cart",
+                          isError: false);
+                    }
+                  },
+                  child: Container(
+                    height: 50.height,
+                    width: 170.width,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20.height),
+                      color: Colors.brown[300],
+                    ),
+                    child: Center(
+                      child: ReusableTextSmall(
+                        size: 16,
+                        text: _isCartItem
+                            ? 'Already in Cart'
+                            : '\$${loadedProduct.price * count} | Add To Cart',
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 ),

@@ -27,7 +27,7 @@ class StoreDSImpl implements StoreDS {
           .get()
           .then((data) {
         log(data.docs.length.toString());
-        data.docs.forEach((prodData) {
+        for (var prodData in data.docs) {
           loadedProducts.add(Product(
             id: prodData.id,
             title: prodData["title"],
@@ -35,8 +35,9 @@ class StoreDSImpl implements StoreDS {
             description: prodData["description"],
             imageUrl: prodData["imageUrl"],
             price: double.parse(prodData["price"].toString()),
+            quantity: int.parse(prodData["quantity"].toString()),
           ));
-        });
+        }
       });
       log("loaded" + loadedProducts.toString());
       return loadedProducts;

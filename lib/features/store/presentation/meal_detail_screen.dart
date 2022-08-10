@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_ecommerce/core/size_config/extensions.dart';
+import 'package:food_ecommerce/features/cart/presentation/cart_page.dart';
+import 'package:food_ecommerce/features/cart/presentation/state/cart_cubit.dart';
 import 'package:food_ecommerce/features/store/presentation/state/store_cubit.dart';
 import 'package:food_ecommerce/features/store/presentation/widgets/expandable_text.dart';
+import 'package:food_ecommerce/reusables/my_toast.dart';
 
 import '../../../reusables/reusable_text_big.dart';
 import '../../../reusables/reusable_text_small.dart';
@@ -25,8 +28,16 @@ class _MealDetailScreenState extends State<MealDetailScreen> {
     final productId = ModalRoute.of(context)!.settings.arguments as String;
 
     final storeCubit = context.read<StoreCubit>();
+    final cartCubit = context.read<CartCubit>();
 
     final loadedProduct = storeCubit.findById(productId);
+    bool _isCartItem = false;
+    for (var element in cartCubit.cart) {
+      if (element.title == loadedProduct.title) {
+        _isCartItem = true;
+        setState(() {});
+      }
+    }
     return Scaffold(
       body: Stack(
         children: [
@@ -58,16 +69,21 @@ class _MealDetailScreenState extends State<MealDetailScreen> {
                     Navigator.pop(context);
                   },
                 ),
-                Container(
-                  height: 45.height,
-                  width: 45.width,
-                  padding: const EdgeInsets.all(5),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(12.height),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pushReplacementNamed(context, CartPage.routeName);
+                  },
+                  child: Container(
+                    height: 45.height,
+                    width: 45.width,
+                    padding: const EdgeInsets.all(5),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(12.height),
+                    ),
+                    child: Image.asset('assets/images/cart.png',
+                        color: Colors.brown[300]),
                   ),
-                  child: Image.asset('assets/images/cart.png',
-                      color: AppColors.mainColor),
                 ),
               ],
             ),
@@ -242,18 +258,33 @@ class _MealDetailScreenState extends State<MealDetailScreen> {
                 ],
               ),
             ),
-            Container(
-              height: 50.height,
-              width: 170.width,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20.height),
-                color: AppColors.mainColor,
-              ),
-              child: Center(
-                child: ReusableTextSmall(
-                  size: 16,
-                  text: '\$${loadedProduct.price * count} | Add to Cart',
-                  color: Colors.white,
+            GestureDetector(
+              onTap: () async {
+                if (_isCartItem) {
+                  Navigator.pushReplacementNamed(context, CartPage.routeName);
+                }
+                await cartCubit.addToCart(
+                    prod: loadedProduct.copyWith(quantity: count));
+                if (cartCubit.state.error == null) {
+                  MyToast.show(
+                      context: context, text: "Added To Cart", isError: false);
+                }
+              },
+              child: Container(
+                height: 50.height,
+                width: 170.width,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20.height),
+                  color: Colors.brown[300],
+                ),
+                child: Center(
+                  child: ReusableTextSmall(
+                    size: 16,
+                    text: _isCartItem
+                        ? 'Already in Cart'
+                        : '\$${loadedProduct.price * count} | Add to Cart',
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ),

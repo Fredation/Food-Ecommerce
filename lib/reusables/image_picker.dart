@@ -84,7 +84,7 @@ class _ImagePickerWidgetState extends State<ImagePickerWidget> {
                 //const Color.fromARGB(255, 161, 136, 127),
                 ),
           ),
-          onPressed: _userImage == null ? _uploadImage : null,
+          onPressed: _uploadImage,
           icon: Icon(
             Icons.image,
             color: Colors.brown[300],

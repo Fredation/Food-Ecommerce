@@ -1,12 +1,10 @@
-import 'dart:developer';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_ecommerce/core/size_config/extensions.dart';
+import 'package:food_ecommerce/features/cart/presentation/cart_page.dart';
+import 'package:food_ecommerce/features/cart/presentation/state/cart_cubit.dart';
 import 'package:food_ecommerce/features/store/presentation/widgets/food_page_body.dart';
 import 'package:food_ecommerce/screens/drawer.dart';
-
-import '../core/app_colors.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -18,7 +16,14 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   @override
+  void initState() {
+    context.read<CartCubit>().getCart();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final checkout = context.read<CartCubit>();
     return Scaffold(
       drawer: AppDrawer(),
       body: SizedBox(
@@ -51,29 +56,15 @@ class _HomeScreenState extends State<HomeScreen> {
                       Center(
                         child: GestureDetector(
                           onTap: () async {
-                            await FirebaseFirestore.instance
-                                .collection('all_products/')
-                                .get()
-                                .then((data) {
-                              for (var docs in data.docs) {
-                                log(docs['price']);
-                              }
-                            });
-                            // FirebaseFirestore.instance
-                            //     .collection('all_products/')
-                            //     .snapshots()
-                            //     .listen((data) {
-                            //   for (var docs in data.docs) {
-                            //     log(docs['price']);
-                            //   }
-                            // });
+                            await checkout.getCart();
+                            Navigator.pushNamed(context, CartPage.routeName);
                           },
                           child: Container(
                             height: 45.height,
                             width: 45.width,
                             padding: const EdgeInsets.all(5),
                             decoration: BoxDecoration(
-                              color: AppColors.mainColor,
+                              color: Colors.brown[300],
                               borderRadius: BorderRadius.circular(12.height),
                             ),
                             child: Image.asset('assets/images/cart.png',

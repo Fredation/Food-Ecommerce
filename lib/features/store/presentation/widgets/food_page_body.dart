@@ -69,7 +69,7 @@ class _FoodPageBodyState extends State<FoodPageBody> {
           dotsCount: storeCubit.products.length,
           position: currentPageValue,
           decorator: DotsDecorator(
-            activeColor: AppColors.mainColor,
+            activeColor: Colors.brown[300],
             size: const Size.square(9.0),
             activeSize: const Size(18.0, 9.0),
             activeShape: RoundedRectangleBorder(

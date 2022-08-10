@@ -4,6 +4,7 @@ import 'package:food_ecommerce/core/model/build_config.dart';
 import 'package:food_ecommerce/cubit_states.dart';
 import 'package:food_ecommerce/features/auth/presentation/login_screen.dart';
 import 'package:food_ecommerce/features/auth/presentation/sign_up_screen.dart';
+import 'package:food_ecommerce/features/cart/presentation/cart_page.dart';
 import 'package:food_ecommerce/features/store/presentation/meal_detail_screen.dart';
 import 'package:food_ecommerce/features/store/presentation/popular_meal_detail_screen.dart';
 import 'package:food_ecommerce/screens/home_screen.dart';
@@ -46,6 +47,7 @@ class _MyAppState extends State<MyApp> {
             LoginScreen.routeName: (ctx) => LoginScreen(),
             SignUpScreen.routeName: (ctx) => const SignUpScreen(),
             SplashScreen.routeName: (ctx) => const SplashScreen(),
+            CartPage.routeName: (ctx) => const CartPage(),
             // AddProductScreen.routeName: (ctx) => AddProductScreen(),
           },
         ),

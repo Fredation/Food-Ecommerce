@@ -1,5 +1,6 @@
 import 'package:food_ecommerce/cubit_states.dart';
 import 'package:food_ecommerce/features/auth/presentation/state/auth_cubit.dart';
+import 'package:food_ecommerce/features/cart/presentation/state/cart_cubit.dart';
 import 'package:food_ecommerce/features/store/presentation/state/store_cubit.dart';
 import 'package:get_it/get_it.dart';
 
@@ -12,6 +13,9 @@ getProviders(GetIt instance) {
     ),
     BlocProvider<StoreCubit>(
       create: (context) => instance<StoreCubit>(),
+    ),
+    BlocProvider<CartCubit>(
+      create: (context) => instance<CartCubit>(),
     ),
   ];
 }

@@ -114,6 +114,7 @@ class AuthDSImpl implements AuthDS {
           .ref()
           .child('user_image')
           .child(auth.currentUser!.uid + '.jpg');
+
       await ref.putFile(data);
 
       final url = await ref.getDownloadURL();

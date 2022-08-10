@@ -12,6 +12,13 @@ import 'package:food_ecommerce/features/auth/domain/usecases/register_usecase.da
 import 'package:food_ecommerce/features/auth/domain/usecases/save_user_image_to_storage.dart';
 import 'package:food_ecommerce/features/auth/domain/usecases/save_user_to_db.dart';
 import 'package:food_ecommerce/features/auth/presentation/state/auth_cubit.dart';
+import 'package:food_ecommerce/features/cart/data/datasources/cart_ds.dart';
+import 'package:food_ecommerce/features/cart/data/repositories/cart_repo_impl.dart';
+import 'package:food_ecommerce/features/cart/domain/repository/cart_repo.dart';
+import 'package:food_ecommerce/features/cart/domain/usecases/add_to_cart_usecase.dart';
+import 'package:food_ecommerce/features/cart/domain/usecases/get_cart_usecase.dart';
+import 'package:food_ecommerce/features/cart/domain/usecases/remove_from_cart_usecase.dart';
+import 'package:food_ecommerce/features/cart/presentation/state/cart_cubit.dart';
 import 'package:food_ecommerce/features/store/data/datasources/store_ds.dart';
 import 'package:food_ecommerce/features/store/data/repositories/product_repo_impl.dart';
 import 'package:food_ecommerce/features/store/domain/repositories/product_repo.dart';
@@ -44,6 +51,13 @@ class AppInjectionModule implements InjectionModule {
         getProductsUsecase: injector.get(),
       ),
     );
+    injector.registerFactory(
+      () => CartCubit(
+        addToCartUsecase: injector.get(),
+        getCartUsecase: injector.get(),
+        removeFromCartUsecase: injector.get(),
+      ),
+    );
 
     //usecases
     injector.registerLazySingleton(() => RegisterUsecase(injector()));
@@ -54,6 +68,9 @@ class AppInjectionModule implements InjectionModule {
     injector.registerLazySingleton(() => GetUserDataUsecase(injector()));
     injector
         .registerLazySingleton(() => SaveUserImageToStorageUsecase(injector()));
+    injector.registerLazySingleton(() => AddToCartUsecase(injector()));
+    injector.registerLazySingleton(() => RemoveFromCartUsecase(injector()));
+    injector.registerLazySingleton(() => GetCartUsecase(injector()));
 
     //repositories
     injector.registerLazySingleton<AuthRepo>(
@@ -62,6 +79,9 @@ class AppInjectionModule implements InjectionModule {
     injector.registerLazySingleton<ProductRepo>(
       () => ProductRepoImpl(storeDS: injector()),
     );
+    injector.registerLazySingleton<CartRepo>(
+      () => CartRepoImpl(cartDS: injector()),
+    );
 
     //datasources
     injector.registerLazySingleton<AuthDS>(
@@ -69,6 +89,9 @@ class AppInjectionModule implements InjectionModule {
     );
     injector.registerLazySingleton<StoreDS>(
       () => StoreDSImpl(storage: injector(), api: injector()),
+    );
+    injector.registerLazySingleton<CartDS>(
+      () => CartDSImpl(),
     );
   }
 }
