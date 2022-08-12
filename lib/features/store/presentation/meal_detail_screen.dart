@@ -14,7 +14,7 @@ import '../../../reusables/icon_and_text.dart';
 import '../../../core/app_colors.dart';
 
 class MealDetailScreen extends StatefulWidget {
-  MealDetailScreen({Key? key}) : super(key: key);
+  const MealDetailScreen({Key? key}) : super(key: key);
   static const routeName = '/meal-detail';
 
   @override

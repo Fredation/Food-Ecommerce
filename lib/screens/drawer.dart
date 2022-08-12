@@ -8,6 +8,8 @@ import 'package:food_ecommerce/features/address/presentation/state/address_cubit
 import 'package:food_ecommerce/features/auth/presentation/login_screen.dart';
 import 'package:food_ecommerce/features/auth/presentation/state/auth_cubit.dart';
 import 'package:food_ecommerce/features/auth/presentation/update_profile_page.dart';
+import 'package:food_ecommerce/features/store/presentation/favorites_page.dart';
+import 'package:food_ecommerce/features/store/presentation/state/store_cubit.dart';
 import 'package:food_ecommerce/reusables/image_picker.dart';
 import 'package:food_ecommerce/reusables/text_image.dart';
 
@@ -18,6 +20,7 @@ class AppDrawer extends StatelessWidget {
     FocusScope.of(context).unfocus();
     final authCubit = context.watch<AuthCubit>();
     final addressCubit = context.watch<AddressCubit>();
+    final storeCubit = context.watch<StoreCubit>();
 
     return SizedBox(
       width: 257.width,
@@ -100,9 +103,15 @@ class AppDrawer extends StatelessWidget {
               color: Colors.black.withOpacity(.5),
             ),
             SizedBox(height: 10.height),
-            textImage(
-              imageUrl: 'assets/images/favorites_icon.png',
-              text: 'My Favorites',
+            GestureDetector(
+              onTap: () async {
+                await storeCubit.getFavorites();
+                Navigator.pushNamed(context, FavoritePage.routeName);
+              },
+              child: textImage(
+                imageUrl: 'assets/images/favorites_icon.png',
+                text: 'My Favorites',
+              ),
             ),
             SizedBox(height: 10.height),
             Divider(

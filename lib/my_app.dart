@@ -8,6 +8,7 @@ import 'package:food_ecommerce/features/auth/presentation/login_screen.dart';
 import 'package:food_ecommerce/features/auth/presentation/sign_up_screen.dart';
 import 'package:food_ecommerce/features/auth/presentation/update_profile_page.dart';
 import 'package:food_ecommerce/features/cart/presentation/cart_page.dart';
+import 'package:food_ecommerce/features/store/presentation/favorites_page.dart';
 import 'package:food_ecommerce/features/store/presentation/meal_detail_screen.dart';
 import 'package:food_ecommerce/features/store/presentation/popular_meal_detail_screen.dart';
 import 'package:food_ecommerce/screens/home_screen.dart';
@@ -44,7 +45,7 @@ class _MyAppState extends State<MyApp> {
           theme: ThemeData(primarySwatch: Colors.blue),
           routes: {
             HomeScreen.routeName: (ctx) => const HomeScreen(),
-            MealDetailScreen.routeName: (ctx) => MealDetailScreen(),
+            MealDetailScreen.routeName: (ctx) => const MealDetailScreen(),
             PopularMealDetailScreen.routeName: (ctx) =>
                 PopularMealDetailScreen(),
             LoginScreen.routeName: (ctx) => LoginScreen(),
@@ -54,6 +55,7 @@ class _MyAppState extends State<MyApp> {
             AddressPage.routeName: (ctx) => const AddressPage(),
             CreateAddress.routeName: (ctx) => const CreateAddress(),
             UpdateProfilePage.routeName: (ctx) => const UpdateProfilePage(),
+            FavoritePage.routeName: (ctx) => const FavoritePage(),
             // AddProductScreen.routeName: (ctx) => AddProductScreen(),
           },
         ),

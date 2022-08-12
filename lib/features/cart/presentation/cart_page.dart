@@ -5,6 +5,7 @@ import 'package:food_ecommerce/core/data_utils/constants.dart';
 import 'package:food_ecommerce/core/data_utils/format_money.dart';
 import 'package:food_ecommerce/features/cart/presentation/widgets/cart_item.dart';
 import 'package:food_ecommerce/features/cart/presentation/state/cart_cubit.dart';
+import 'package:food_ecommerce/reusables/my_appbar.dart';
 
 class CartPage extends StatefulWidget {
   static const routeName = '/cart-page';
@@ -19,45 +20,7 @@ class _CartPageState extends State<CartPage> {
   Widget build(BuildContext context) {
     final ckoutCubit = context.watch<CartCubit>();
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        titleSpacing: 70,
-        title: const Text(
-          "Checkout",
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 24,
-            fontFamily: 'Lato',
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-        leading: GestureDetector(
-          onTap: () {
-            Navigator.maybePop(context);
-          },
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                margin: const EdgeInsets.only(left: 30),
-                height: 40,
-                width: 40,
-                decoration: BoxDecoration(
-                    color: const Color.fromRGBO(201, 201, 201, 0.1),
-                    borderRadius: BorderRadius.circular(8)),
-                alignment: Alignment.center,
-                child: const Icon(
-                  Icons.arrow_back_rounded,
-                  color: Colors.black,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
+      appBar: MyAppBar(title: "Checkout"),
       body: ListView(
         padding: const EdgeInsets.symmetric(horizontal: 30),
         children: [
