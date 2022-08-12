@@ -21,14 +21,23 @@ class PopularMealDetailScreen extends StatefulWidget {
 
 class _PopularMealDetailScreenState extends State<PopularMealDetailScreen> {
   int count = 1;
-
+  bool isFav = false;
   @override
   Widget build(BuildContext context) {
     final productId = ModalRoute.of(context)!.settings.arguments as String;
     final storeCubit = context.read<StoreCubit>();
     final cartCubit = context.read<CartCubit>();
+    final favCubit = context.watch<StoreCubit>();
 
     final loadedProduct = storeCubit.findById(productId);
+
+    for (var element in storeCubit.favorites) {
+      if (element.id == loadedProduct.id) {
+        isFav = element.isFavorite;
+        setState(() {});
+      }
+    }
+
     bool _isCartItem = false;
     for (var element in cartCubit.cart) {
       if (element.title == loadedProduct.title) {
@@ -175,18 +184,32 @@ class _PopularMealDetailScreenState extends State<PopularMealDetailScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Container(
-                  height: 50.height,
-                  width: 55.width,
-                  padding: EdgeInsets.only(left: 10.width, right: 10.width),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20.height),
-                    color: Colors.white,
-                  ),
-                  child: Icon(
-                    Icons.favorite,
-                    size: 25,
-                    color: Colors.brown[300],
+                GestureDetector(
+                  onTap: () async {
+                    if (isFav == true) {
+                      await favCubit.toggleFav(
+                          pid: loadedProduct.id, isFav: false);
+                      await favCubit.getFavorites();
+                    } else {
+                      await favCubit.toggleFav(
+                          pid: loadedProduct.id, isFav: true);
+                      await favCubit.getFavorites();
+                    }
+                  },
+                  child: Container(
+                    height: 50.height,
+                    width: 55.width,
+                    padding: EdgeInsets.only(left: 10.width, right: 10.width),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20.height),
+                      color: Colors.white,
+                    ),
+                    child: Icon(
+                      Icons.favorite,
+                      size: 25,
+                      color:
+                          isFav == true ? Colors.brown[300] : Colors.grey[200],
+                    ),
                   ),
                 ),
                 GestureDetector(

@@ -14,6 +14,7 @@ class SaveUserToDBUsecase extends UseCase<void, UserParams> {
       'email': params.email.trim(),
       'phone_number': params.phoneNumber.trim(),
       'username': params.userName.trim(),
+      "image_url": null,
     });
   }
 }

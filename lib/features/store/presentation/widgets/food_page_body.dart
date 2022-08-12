@@ -103,7 +103,8 @@ class _FoodPageBodyState extends State<FoodPageBody> {
             itemBuilder: (ctx, index) {
               final product = storeCubit.products[index];
               return GestureDetector(
-                onTap: () {
+                onTap: () async {
+                  await storeCubit.getFavorites();
                   Navigator.of(context).pushNamed(
                     PopularMealDetailScreen.routeName,
                     arguments: product.id,

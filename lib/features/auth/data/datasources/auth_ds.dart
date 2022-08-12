@@ -98,11 +98,13 @@ class AuthDSImpl implements AuthDS {
             email: value['email'],
             phoneNumber: value['phone_number'],
             userName: value['username'],
-            imageUrl: value['image_url']);
+            imageUrl: value["image_url"]);
+        log(userData.toString());
       });
 
       return userData;
     } catch (e) {
+      log(e.toString());
       rethrow;
     }
   }

@@ -41,6 +41,7 @@ class _ImagePickerWidgetState extends State<ImagePickerWidget> {
       await context
           .read<AuthCubit>()
           .saveUserImageToStorage(imageFile: File(_pickedImage!.path));
+      await context.read<AuthCubit>().getUserData();
     }
   }
 

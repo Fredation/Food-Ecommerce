@@ -114,6 +114,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   isError: false,
                                 );
                                 await storeCubit.getProducts();
+                                await storeCubit.getFavorites();
                                 Navigator.pushReplacementNamed(
                                     context, HomeScreen.routeName);
                               } else {

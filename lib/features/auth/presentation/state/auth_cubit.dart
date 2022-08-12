@@ -62,6 +62,7 @@ class AuthCubit extends Cubit<AuthState> {
     final res =
         await loginUsecase(LoginParams(email: email, password: password));
     res.fold((l) {
+      log(l.toString());
       emit(state.copyWith(isLoading: false, error: l));
     }, (r) {
       user = r;

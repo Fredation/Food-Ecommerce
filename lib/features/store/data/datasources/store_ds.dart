@@ -1,15 +1,17 @@
-import 'dart:convert';
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:food_ecommerce/core/network/api.dart';
 import 'package:food_ecommerce/core/storage/storage.dart';
+import 'package:food_ecommerce/features/store/data/models/favorite_model.dart';
+import 'package:food_ecommerce/features/store/domain/entities/favorite.dart';
 import 'package:food_ecommerce/features/store/domain/entities/product.dart';
 
 abstract class StoreDS {
   Future<List<Product>> getProducts();
+  Future<void> toggleFav({required String pid, required bool isFavorite});
+  Future<List<Favorite>> getFavorites();
 }
 
 class StoreDSImpl implements StoreDS {
@@ -41,6 +43,50 @@ class StoreDSImpl implements StoreDS {
       });
       log("loaded" + loadedProducts.toString());
       return loadedProducts;
+    } catch (e) {
+      log(e.toString());
+      rethrow;
+    }
+  }
+
+  @override
+  Future<void> toggleFav(
+      {required String pid, required bool isFavorite}) async {
+    final fav = FavoriteModel(id: pid, isFavorite: isFavorite).toJson();
+    log(fav.toString());
+    try {
+      await FirebaseFirestore.instance
+          .collection('favorites/')
+          .doc(auth.currentUser!.uid)
+          .collection('/items')
+          .doc(pid)
+          .set(fav);
+    } catch (e) {
+      log(e.toString());
+      rethrow;
+    }
+  }
+
+  @override
+  Future<List<Favorite>> getFavorites() async {
+    try {
+      final List<Favorite> loadedFavorites = [];
+      await FirebaseFirestore.instance
+          .collection('favorites/')
+          .doc(auth.currentUser!.uid)
+          .collection('/items')
+          .get()
+          .then((data) {
+        log(data.docs.length.toString());
+        for (var favData in data.docs) {
+          loadedFavorites.add(Favorite(
+            id: favData.id,
+            isFavorite: favData["favorite"],
+          ));
+        }
+      });
+      log("loaded" + loadedFavorites.toString());
+      return loadedFavorites;
     } catch (e) {
       log(e.toString());
       rethrow;

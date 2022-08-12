@@ -64,13 +64,13 @@ class AppDrawer extends StatelessWidget {
               decoration: const BoxDecoration(
                 gradient: LinearGradient(
                   colors: [
-                    Color.fromRGBO(128, 255, 191, 1),
+                    Color.fromARGB(255, 161, 136, 127),
                     Color.fromRGBO(196, 196, 196, 0),
                   ],
                 ),
               ),
             ),
-            SizedBox(height: 10.height),
+            SizedBox(height: 20.height),
             GestureDetector(
               onTap: () async {
                 Navigator.pushNamed(context, UpdateProfilePage.routeName);
@@ -80,9 +80,11 @@ class AppDrawer extends StatelessWidget {
                 text: 'My Profile',
               ),
             ),
+            SizedBox(height: 10.height),
             Divider(
               color: Colors.black.withOpacity(.5),
             ),
+            SizedBox(height: 10.height),
             GestureDetector(
               onTap: () async {
                 await addressCubit.getAddresses();
@@ -93,20 +95,25 @@ class AppDrawer extends StatelessWidget {
                 text: 'My Addresses',
               ),
             ),
+            SizedBox(height: 10.height),
             Divider(
               color: Colors.black.withOpacity(.5),
             ),
+            SizedBox(height: 10.height),
             textImage(
               imageUrl: 'assets/images/favorites_icon.png',
               text: 'My Favorites',
             ),
+            SizedBox(height: 10.height),
             Divider(
               color: Colors.black.withOpacity(.5),
             ),
+            SizedBox(height: 10.height),
             textImage(
               imageUrl: 'assets/images/order_history_icon.png',
               text: 'Order History',
             ),
+            SizedBox(height: 10.height),
             Divider(
               color: Colors.black.withOpacity(.5),
             ),
@@ -119,12 +126,13 @@ class AppDrawer extends StatelessWidget {
               decoration: const BoxDecoration(
                 gradient: LinearGradient(
                   colors: [
-                    Color.fromRGBO(128, 255, 191, 1),
+                    Color.fromARGB(255, 161, 136, 127),
                     Color.fromRGBO(196, 196, 196, 0),
                   ],
                 ),
               ),
             ),
+            SizedBox(height: 10.height),
             GestureDetector(
               onTap: () async {
                 log('tapped');

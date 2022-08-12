@@ -29,7 +29,9 @@ import 'package:food_ecommerce/features/cart/presentation/state/cart_cubit.dart'
 import 'package:food_ecommerce/features/store/data/datasources/store_ds.dart';
 import 'package:food_ecommerce/features/store/data/repositories/product_repo_impl.dart';
 import 'package:food_ecommerce/features/store/domain/repositories/product_repo.dart';
+import 'package:food_ecommerce/features/store/domain/usecases/get_favorites_usecase.dart';
 import 'package:food_ecommerce/features/store/domain/usecases/get_products_usecase.dart';
+import 'package:food_ecommerce/features/store/domain/usecases/toggle_fav_usecase.dart';
 import 'package:food_ecommerce/features/store/presentation/state/store_cubit.dart';
 import 'package:get_it/get_it.dart';
 import 'dart:async';
@@ -56,6 +58,8 @@ class AppInjectionModule implements InjectionModule {
     injector.registerFactory(
       () => StoreCubit(
         getProductsUsecase: injector.get(),
+        getFavoriteUsecase: injector.get(),
+        toggleFavUsecase: injector.get(),
       ),
     );
     injector.registerFactory(
@@ -88,6 +92,8 @@ class AppInjectionModule implements InjectionModule {
     injector.registerLazySingleton(() => CreateAddressUsecase(injector()));
     injector.registerLazySingleton(() => GetAddressesUsecase(injector()));
     injector.registerLazySingleton(() => DeleteAddressUsecase(injector()));
+    injector.registerLazySingleton(() => GetFavoriteUsecase(injector()));
+    injector.registerLazySingleton(() => ToggleFavUsecase(injector()));
 
     //repositories
     injector.registerLazySingleton<AuthRepo>(
