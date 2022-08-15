@@ -5,12 +5,14 @@ class InputField extends StatefulWidget {
   TextEditingController controller;
   String? Function(String?)? validator;
   String? errorText;
+  bool isEnabled;
   InputField({
     Key? key,
     required this.hintText,
     required this.controller,
     this.validator,
     this.errorText,
+    this.isEnabled = true,
   }) : super(key: key);
 
   @override
@@ -26,6 +28,10 @@ class _InputFieldState extends State<InputField>
   @override
   void initState() {
     super.initState();
+    if (widget.controller.text.isNotEmpty) {
+      _focusNode.unfocus();
+      _isFocused = true;
+    }
     _focusNode.addListener(() {
       if (_focusNode.hasFocus == false && widget.controller.text.isEmpty) {
         _isFocused = false;
@@ -66,7 +72,9 @@ class _InputFieldState extends State<InputField>
                     ? const EdgeInsets.only(top: 10, left: 16)
                     : const EdgeInsets.only(top: 22, left: 16),
                 decoration: BoxDecoration(
-                  color: const Color.fromRGBO(250, 250, 250, 1),
+                  color: widget.isEnabled
+                      ? const Color.fromRGBO(250, 250, 250, 1)
+                      : Colors.grey[100],
                   borderRadius: BorderRadius.circular(8),
                   border: Border.all(
                     color: _isFocused
@@ -108,7 +116,7 @@ class _InputFieldState extends State<InputField>
                                 border: InputBorder.none,
                                 contentPadding: EdgeInsets.only(bottom: 10),
                               ),
-                              enabled: true,
+                              enabled: widget.isEnabled,
                               controller: widget.controller,
                               validator: widget.validator,
                             ),

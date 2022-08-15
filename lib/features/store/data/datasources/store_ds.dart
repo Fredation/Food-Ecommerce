@@ -55,12 +55,19 @@ class StoreDSImpl implements StoreDS {
     final fav = FavoriteModel(id: pid, isFavorite: isFavorite).toJson();
     log(fav.toString());
     try {
-      await FirebaseFirestore.instance
-          .collection('favorites/')
-          .doc(auth.currentUser!.uid)
-          .collection('/items')
-          .doc(pid)
-          .set(fav);
+      isFavorite == true
+          ? await FirebaseFirestore.instance
+              .collection('favorites/')
+              .doc(auth.currentUser!.uid)
+              .collection('/items')
+              .doc(pid)
+              .set(fav)
+          : await FirebaseFirestore.instance
+              .collection('favorites/')
+              .doc(auth.currentUser!.uid)
+              .collection('/items')
+              .doc(pid)
+              .delete();
     } catch (e) {
       log(e.toString());
       rethrow;

@@ -47,11 +47,13 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
               GestureDetector(
                 onTap: () async {
                   if (_formKey.currentState!.validate()) {
-                    await authState.saveUserToDB(
+                    await authState.updateUserDB(
                       email: _emailController.text,
                       phoneNumber: _phoneController.text,
                       userName: _usernameController.text,
+                      imageUrl: userData?.imageUrl,
                     );
+                    await authState.getUserData();
                     Navigator.of(context).pop();
                   }
                 },
@@ -107,6 +109,7 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
                   controller: _emailController,
                   validator: MyFormValidator.validateEmail,
                   errorText: MyFormValidator.emailErr,
+                  isEnabled: false,
                 ),
               ],
             ),

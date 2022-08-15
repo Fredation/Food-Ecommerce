@@ -122,14 +122,7 @@ class AppDrawer extends StatelessWidget {
               imageUrl: 'assets/images/order_history_icon.png',
               text: 'Order History',
             ),
-            SizedBox(height: 10.height),
-            Divider(
-              color: Colors.black.withOpacity(.5),
-            ),
-            SizedBox(height: 10.height),
-            SizedBox(
-              height: 35.height,
-            ),
+            SizedBox(height: 17.height),
             Container(
               height: 2,
               decoration: const BoxDecoration(
@@ -142,6 +135,9 @@ class AppDrawer extends StatelessWidget {
               ),
             ),
             SizedBox(height: 10.height),
+            SizedBox(
+              height: 55.height,
+            ),
             GestureDetector(
               onTap: () async {
                 log('tapped');
@@ -157,7 +153,10 @@ class AppDrawer extends StatelessWidget {
                     SizedBox(
                       height: 50,
                       width: 50,
-                      child: Image.asset('assets/images/logout.png'),
+                      child: Image.asset(
+                        'assets/images/logout.png',
+                        color: Colors.brown[300],
+                      ),
                     ),
                     Text(
                       'Logout',

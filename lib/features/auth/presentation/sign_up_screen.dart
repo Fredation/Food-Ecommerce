@@ -133,6 +133,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   email: _emailController.text.trim(),
                                   phoneNumber: _phoneController.text.trim(),
                                   userName: _nameController.text.trim(),
+                                  imageUrl: null,
                                 );
                                 await authCubit.getUserData();
                                 if (authCubit.state.error == null) {

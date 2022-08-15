@@ -33,7 +33,10 @@ class _PopularMealDetailScreenState extends State<PopularMealDetailScreen> {
 
     for (var element in storeCubit.favorites) {
       if (element.id == loadedProduct.id) {
-        isFav = element.isFavorite;
+        isFav = true;
+        setState(() {});
+      } else {
+        isFav = false;
         setState(() {});
       }
     }
@@ -190,10 +193,15 @@ class _PopularMealDetailScreenState extends State<PopularMealDetailScreen> {
                       await favCubit.toggleFav(
                           pid: loadedProduct.id, isFav: false);
                       await favCubit.getFavorites();
+                      setState(() {
+                        isFav = false;
+                      });
                     } else {
                       await favCubit.toggleFav(
                           pid: loadedProduct.id, isFav: true);
+
                       await favCubit.getFavorites();
+                      setState(() {});
                     }
                   },
                   child: Container(

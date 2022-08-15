@@ -66,4 +66,14 @@ class AuthRepoImpl implements AuthRepo {
       return Left(Failure(e.toString()));
     }
   }
+
+  @override
+  Future<Either<Failure, void>> updateUserDB(Map<String, dynamic> data) async {
+    try {
+      final res = await authDS.updateUserDB(data);
+      return Right(res);
+    } catch (e) {
+      return Left(Failure(e.toString()));
+    }
+  }
 }

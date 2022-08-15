@@ -18,6 +18,7 @@ import 'package:food_ecommerce/features/auth/domain/usecases/login_usecase.dart'
 import 'package:food_ecommerce/features/auth/domain/usecases/register_usecase.dart';
 import 'package:food_ecommerce/features/auth/domain/usecases/save_user_image_to_storage.dart';
 import 'package:food_ecommerce/features/auth/domain/usecases/save_user_to_db.dart';
+import 'package:food_ecommerce/features/auth/domain/usecases/update_user_db_usecase.dart';
 import 'package:food_ecommerce/features/auth/presentation/state/auth_cubit.dart';
 import 'package:food_ecommerce/features/cart/data/datasources/cart_ds.dart';
 import 'package:food_ecommerce/features/cart/data/repositories/cart_repo_impl.dart';
@@ -53,6 +54,7 @@ class AppInjectionModule implements InjectionModule {
         saveUserToDBUsecase: injector.get(),
         getUserDataUsecase: injector.get(),
         saveUserImageToStorageUsecase: injector.get(),
+        updateUserDBUsecase: injector.get(),
       ),
     );
     injector.registerFactory(
@@ -94,6 +96,7 @@ class AppInjectionModule implements InjectionModule {
     injector.registerLazySingleton(() => DeleteAddressUsecase(injector()));
     injector.registerLazySingleton(() => GetFavoriteUsecase(injector()));
     injector.registerLazySingleton(() => ToggleFavUsecase(injector()));
+    injector.registerLazySingleton(() => UpdateUserDBUsecase(injector()));
 
     //repositories
     injector.registerLazySingleton<AuthRepo>(

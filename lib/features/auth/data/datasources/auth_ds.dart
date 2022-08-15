@@ -14,6 +14,7 @@ abstract class AuthDS {
   Future<void> saveUserToDB(data);
   Future<UserData> getUserData();
   Future<void> saveUserImageToStorage(data);
+  Future<void> updateUserDB(data);
 }
 
 class AuthDSImpl implements AuthDS {
@@ -125,6 +126,18 @@ class AuthDSImpl implements AuthDS {
           .collection('users')
           .doc(auth.currentUser!.uid)
           .update({"image_url": url});
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<void> updateUserDB(data) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(auth.currentUser!.uid)
+          .update(data);
     } catch (e) {
       rethrow;
     }

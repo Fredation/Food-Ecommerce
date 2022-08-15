@@ -12,6 +12,7 @@ import 'package:food_ecommerce/features/auth/domain/usecases/login_usecase.dart'
 import 'package:food_ecommerce/features/auth/domain/usecases/register_usecase.dart';
 import 'package:food_ecommerce/features/auth/domain/usecases/save_user_image_to_storage.dart';
 import 'package:food_ecommerce/features/auth/domain/usecases/save_user_to_db.dart';
+import 'package:food_ecommerce/features/auth/domain/usecases/update_user_db_usecase.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'auth_cubit.freezed.dart';
@@ -23,6 +24,7 @@ class AuthCubit extends Cubit<AuthState> {
   SaveUserToDBUsecase saveUserToDBUsecase;
   GetUserDataUsecase getUserDataUsecase;
   SaveUserImageToStorageUsecase saveUserImageToStorageUsecase;
+  UpdateUserDBUsecase updateUserDBUsecase;
 
   AuthCubit({
     required this.registerUsecase,
@@ -31,6 +33,7 @@ class AuthCubit extends Cubit<AuthState> {
     required this.saveUserToDBUsecase,
     required this.getUserDataUsecase,
     required this.saveUserImageToStorageUsecase,
+    required this.updateUserDBUsecase,
   }) : super(const AuthState());
 
   FirebaseAuth auth = FirebaseAuth.instance;
@@ -79,10 +82,34 @@ class AuthCubit extends Cubit<AuthState> {
     required String email,
     required String phoneNumber,
     required String userName,
+    required String? imageUrl,
   }) async {
     emit(state.copyWith(isLoading: true, error: null));
-    final res = await saveUserToDBUsecase(
-        UserParams(email: email, phoneNumber: phoneNumber, userName: userName));
+    final res = await saveUserToDBUsecase(UserParams(
+      email: email,
+      phoneNumber: phoneNumber,
+      userName: userName,
+      imageUrl: imageUrl,
+    ));
+    res.fold((l) {
+      emit(state.copyWith(isLoading: false, error: l));
+    }, (r) {
+      emit(state.copyWith(isLoading: false, error: null));
+    });
+  }
+
+  Future<void> updateUserDB({
+    required String email,
+    required String phoneNumber,
+    required String userName,
+    required String? imageUrl,
+  }) async {
+    emit(state.copyWith(isLoading: true, error: null));
+    final res = await updateUserDBUsecase(UserParams(
+        email: email,
+        phoneNumber: phoneNumber,
+        userName: userName,
+        imageUrl: imageUrl));
     res.fold((l) {
       emit(state.copyWith(isLoading: false, error: l));
     }, (r) {

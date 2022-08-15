@@ -13,4 +13,5 @@ abstract class AuthRepo {
   Future<Either<Failure, void>> saveUserToDB(Map<String, dynamic> data);
   Future<Either<Failure, UserData>> getUserData();
   Future<Either<Failure, void>> saveUserImageToStorage(File data);
+  Future<Either<Failure, void>> updateUserDB(Map<String, dynamic> data);
 }
