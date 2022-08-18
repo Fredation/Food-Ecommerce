@@ -31,9 +31,10 @@ class _CreateAddressState extends State<CreateAddress> {
 
   @override
   void didChangeDependencies() {
+    super.didChangeDependencies();
+
     MyFormValidator.contentErr = null;
     setState(() {});
-    super.didChangeDependencies();
   }
 
   @override

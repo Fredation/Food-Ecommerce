@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:food_ecommerce/app_injection_component.dart';
 import 'package:food_ecommerce/app_setup.dart';
@@ -17,7 +18,10 @@ abstract class AppStart {
   final resolvers = <FeatureResolver>[
     AppResolver(),
   ];
+  static final FirebaseAnalytics _analytics = FirebaseAnalytics.instance;
 
+  static FirebaseAnalyticsObserver getAnalyticsObserver =
+      FirebaseAnalyticsObserver(analytics: _analytics);
   AppStart(this.buildConfig);
 
   Future<void> startApp() async {
@@ -44,6 +48,7 @@ abstract class AppStart {
           buildConfig: buildConfig,
           instance: injector,
           navigatorKey: navigatorKey,
+          observer: getAnalyticsObserver,
         ),
       );
     }, (onError, stackTrace) {});

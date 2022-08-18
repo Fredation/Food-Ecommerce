@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_ecommerce/core/size_config/extensions.dart';
+import 'package:food_ecommerce/features/address/presentation/state/address_cubit.dart';
 import 'package:food_ecommerce/features/cart/presentation/cart_page.dart';
 import 'package:food_ecommerce/features/cart/presentation/state/cart_cubit.dart';
 import 'package:food_ecommerce/features/store/presentation/widgets/food_page_body.dart';
@@ -24,6 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final checkout = context.read<CartCubit>();
+    final addressCubit = context.read<AddressCubit>();
     return Scaffold(
       drawer: AppDrawer(),
       body: SizedBox(
@@ -57,6 +59,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: GestureDetector(
                           onTap: () async {
                             await checkout.getCart();
+                            await checkout.getCartAddress();
+                            await checkout.getRecipient();
+                            await addressCubit.getAddresses();
                             Navigator.pushNamed(context, CartPage.routeName);
                           },
                           child: Container(

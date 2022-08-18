@@ -28,7 +28,6 @@ class StoreDSImpl implements StoreDS {
           .collection('all_products/')
           .get()
           .then((data) {
-        log(data.docs.length.toString());
         for (var prodData in data.docs) {
           loadedProducts.add(Product(
             id: prodData.id,
@@ -41,7 +40,6 @@ class StoreDSImpl implements StoreDS {
           ));
         }
       });
-      log("loaded" + loadedProducts.toString());
       return loadedProducts;
     } catch (e) {
       log(e.toString());
@@ -53,7 +51,6 @@ class StoreDSImpl implements StoreDS {
   Future<void> toggleFav(
       {required String pid, required bool isFavorite}) async {
     final fav = FavoriteModel(id: pid, isFavorite: isFavorite).toJson();
-    log(fav.toString());
     try {
       isFavorite == true
           ? await FirebaseFirestore.instance
@@ -84,7 +81,6 @@ class StoreDSImpl implements StoreDS {
           .collection('/items')
           .get()
           .then((data) {
-        log(data.docs.length.toString());
         for (var favData in data.docs) {
           loadedFavorites.add(Favorite(
             id: favData.id,
@@ -92,7 +88,6 @@ class StoreDSImpl implements StoreDS {
           ));
         }
       });
-      log("loaded" + loadedFavorites.toString());
       return loadedFavorites;
     } catch (e) {
       log(e.toString());

@@ -27,7 +27,6 @@ class AuthDSImpl implements AuthDS {
     try {
       final response = await auth.createUserWithEmailAndPassword(
           email: data["email"], password: data["password"]);
-      log(response.toString());
       if (response.user?.uid != null) {
         await storage.saveToken(value: response.user!.uid);
         return response.user;
@@ -47,7 +46,6 @@ class AuthDSImpl implements AuthDS {
     try {
       final response = await auth.signInWithEmailAndPassword(
           email: data["email"], password: data["password"]);
-      log(response.toString());
       if (response.user?.uid != null) {
         await storage.saveToken(value: response.user!.uid);
         return response.user;
@@ -100,7 +98,6 @@ class AuthDSImpl implements AuthDS {
             phoneNumber: value['phone_number'],
             userName: value['username'],
             imageUrl: value["image_url"]);
-        log(userData.toString());
       });
 
       return userData;

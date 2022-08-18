@@ -23,8 +23,12 @@ import 'package:food_ecommerce/features/auth/presentation/state/auth_cubit.dart'
 import 'package:food_ecommerce/features/cart/data/datasources/cart_ds.dart';
 import 'package:food_ecommerce/features/cart/data/repositories/cart_repo_impl.dart';
 import 'package:food_ecommerce/features/cart/domain/repository/cart_repo.dart';
+import 'package:food_ecommerce/features/cart/domain/usecases/add_cart_add_usecase.dart';
+import 'package:food_ecommerce/features/cart/domain/usecases/add_recipient_usecase.dart';
 import 'package:food_ecommerce/features/cart/domain/usecases/add_to_cart_usecase.dart';
+import 'package:food_ecommerce/features/cart/domain/usecases/get_cart_add_usecase.dart';
 import 'package:food_ecommerce/features/cart/domain/usecases/get_cart_usecase.dart';
+import 'package:food_ecommerce/features/cart/domain/usecases/get_recipient_usecase.dart';
 import 'package:food_ecommerce/features/cart/domain/usecases/remove_from_cart_usecase.dart';
 import 'package:food_ecommerce/features/cart/presentation/state/cart_cubit.dart';
 import 'package:food_ecommerce/features/store/data/datasources/store_ds.dart';
@@ -34,6 +38,7 @@ import 'package:food_ecommerce/features/store/domain/usecases/get_favorites_usec
 import 'package:food_ecommerce/features/store/domain/usecases/get_products_usecase.dart';
 import 'package:food_ecommerce/features/store/domain/usecases/toggle_fav_usecase.dart';
 import 'package:food_ecommerce/features/store/presentation/state/store_cubit.dart';
+import 'package:food_ecommerce/firebase_analytics.dart';
 import 'package:get_it/get_it.dart';
 import 'dart:async';
 
@@ -69,6 +74,10 @@ class AppInjectionModule implements InjectionModule {
         addToCartUsecase: injector.get(),
         getCartUsecase: injector.get(),
         removeFromCartUsecase: injector.get(),
+        addCartAddressUsecase: injector.get(),
+        addRecipientUsecase: injector.get(),
+        getCartAddressUsecase: injector.get(),
+        getRecipientUsecase: injector.get(),
       ),
     );
     injector.registerFactory(
@@ -97,6 +106,10 @@ class AppInjectionModule implements InjectionModule {
     injector.registerLazySingleton(() => GetFavoriteUsecase(injector()));
     injector.registerLazySingleton(() => ToggleFavUsecase(injector()));
     injector.registerLazySingleton(() => UpdateUserDBUsecase(injector()));
+    injector.registerLazySingleton(() => AddCartAddressUsecase(injector()));
+    injector.registerLazySingleton(() => AddRecipientUsecase(injector()));
+    injector.registerLazySingleton(() => GetCartAddressUsecase(injector()));
+    injector.registerLazySingleton(() => GetRecipientUsecase(injector()));
 
     //repositories
     injector.registerLazySingleton<AuthRepo>(

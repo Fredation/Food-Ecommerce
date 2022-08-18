@@ -14,6 +14,8 @@ import 'package:food_ecommerce/screens/home_screen.dart';
 class LoginScreen extends StatefulWidget {
   static const routeName = '/login-screen';
 
+  const LoginScreen({Key? key}) : super(key: key);
+
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
@@ -27,10 +29,10 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   void didChangeDependencies() {
+    super.didChangeDependencies();
     MyFormValidator.emailErr = null;
     MyFormValidator.passwordErr = null;
     setState(() {});
-    super.didChangeDependencies();
   }
 
   @override
@@ -86,6 +88,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         hintText: "Password",
                         controller: _passwordController,
                         validator: MyFormValidator.validatePassword,
+                        isPassword: true,
+                        hidePass: true,
                       ),
                       const SizedBox(
                         height: 40,

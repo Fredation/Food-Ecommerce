@@ -6,6 +6,8 @@ class InputField extends StatefulWidget {
   String? Function(String?)? validator;
   String? errorText;
   bool isEnabled;
+  bool isPassword;
+  bool hidePass;
   InputField({
     Key? key,
     required this.hintText,
@@ -13,6 +15,8 @@ class InputField extends StatefulWidget {
     this.validator,
     this.errorText,
     this.isEnabled = true,
+    this.isPassword = false,
+    this.hidePass = false,
   }) : super(key: key);
 
   @override
@@ -69,8 +73,8 @@ class _InputFieldState extends State<InputField>
               Container(
                 height: 60,
                 padding: _isFocused
-                    ? const EdgeInsets.only(top: 10, left: 16)
-                    : const EdgeInsets.only(top: 22, left: 16),
+                    ? const EdgeInsets.only(top: 10, left: 16, right: 16)
+                    : const EdgeInsets.only(top: 22, left: 16, right: 16),
                 decoration: BoxDecoration(
                   color: widget.isEnabled
                       ? const Color.fromRGBO(250, 250, 250, 1)
@@ -87,40 +91,61 @@ class _InputFieldState extends State<InputField>
                     width: 1,
                   ),
                 ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                child: Row(
                   children: [
-                    Text(
-                      widget.hintText,
-                      style: TextStyle(
-                        fontSize: _isFocused ? 12 : 14,
-                        fontWeight: FontWeight.w400,
-                        color: const Color.fromRGBO(0, 0, 0, 0.5),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            widget.hintText,
+                            style: TextStyle(
+                              fontSize: _isFocused ? 12 : 14,
+                              fontWeight: FontWeight.w400,
+                              color: const Color.fromRGBO(0, 0, 0, 0.5),
+                            ),
+                          ),
+                          _isFocused
+                              ? SizedBox(
+                                  height: 30,
+                                  child: TextFormField(
+                                    obscureText: widget.hidePass,
+                                    focusNode: _focusNode,
+                                    autofocus: true,
+                                    cursorColor:
+                                        const Color.fromRGBO(0, 0, 0, 1),
+                                    cursorWidth: 0.5,
+                                    cursorHeight: 18,
+                                    decoration: const InputDecoration(
+                                      //errorText: (value.i),
+                                      errorStyle: TextStyle(
+                                          height: 0,
+                                          fontSize: 0,
+                                          color: Colors.transparent),
+                                      border: InputBorder.none,
+                                      contentPadding:
+                                          EdgeInsets.only(bottom: 10),
+                                    ),
+                                    enabled: widget.isEnabled,
+                                    controller: widget.controller,
+                                    validator: widget.validator,
+                                  ),
+                                )
+                              : const SizedBox(),
+                        ],
                       ),
                     ),
-                    _isFocused
-                        ? SizedBox(
-                            height: 30,
-                            child: TextFormField(
-                              focusNode: _focusNode,
-                              autofocus: true,
-                              cursorColor: const Color.fromRGBO(0, 0, 0, 1),
-                              cursorWidth: 0.5,
-                              cursorHeight: 18,
-                              decoration: const InputDecoration(
-                                //errorText: (value.i),
-                                errorStyle: TextStyle(
-                                    height: 0,
-                                    fontSize: 0,
-                                    color: Colors.transparent),
-                                border: InputBorder.none,
-                                contentPadding: EdgeInsets.only(bottom: 10),
-                              ),
-                              enabled: widget.isEnabled,
-                              controller: widget.controller,
-                              validator: widget.validator,
-                            ),
-                          )
+                    widget.isPassword
+                        ? GestureDetector(
+                            onTap: () {
+                              widget.hidePass = !widget.hidePass;
+                              setState(() {});
+                            },
+                            child: Icon(
+                              widget.hidePass
+                                  ? Icons.visibility_outlined
+                                  : Icons.visibility_off_outlined,
+                            ))
                         : const SizedBox(),
                   ],
                 ),

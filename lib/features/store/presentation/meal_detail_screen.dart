@@ -32,6 +32,8 @@ class _MealDetailScreenState extends State<MealDetailScreen> {
 
     final loadedProduct = storeCubit.findById(productId);
     bool _isCartItem = false;
+
+    //checks if the product is already in cart by comparing the product title to the titles of all the products in cart
     for (var element in cartCubit.cart) {
       if (element.title == loadedProduct.title) {
         _isCartItem = true;
@@ -70,7 +72,8 @@ class _MealDetailScreenState extends State<MealDetailScreen> {
                   },
                 ),
                 GestureDetector(
-                  onTap: () {
+                  onTap: () async {
+                    await cartCubit.getCart();
                     Navigator.pushReplacementNamed(context, CartPage.routeName);
                   },
                   child: Container(
@@ -269,6 +272,7 @@ class _MealDetailScreenState extends State<MealDetailScreen> {
                   MyToast.show(
                       context: context, text: "Added To Cart", isError: false);
                 }
+                await cartCubit.getCart();
               },
               child: Container(
                 height: 50.height,

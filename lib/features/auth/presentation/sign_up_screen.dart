@@ -28,12 +28,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   @override
   void didChangeDependencies() {
+    super.didChangeDependencies();
+
     MyFormValidator.emailErr = null;
     MyFormValidator.passwordErr = null;
     MyFormValidator.nameErr = null;
     MyFormValidator.phoneErr = null;
     setState(() {});
-    super.didChangeDependencies();
   }
 
   @override
@@ -110,6 +111,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           hintText: "Password",
                           controller: _passwordController,
                           validator: MyFormValidator.validatePassword,
+                          isPassword: true,
+                          hidePass: true,
                         ),
                         const SizedBox(
                           height: 30,

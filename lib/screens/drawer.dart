@@ -73,47 +73,59 @@ class AppDrawer extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 20.height),
             GestureDetector(
               onTap: () async {
                 Navigator.pushNamed(context, UpdateProfilePage.routeName);
               },
-              child: textImage(
-                imageUrl: 'assets/images/user_profile_icon.png',
-                text: 'My Profile',
+              child: Column(
+                children: [
+                  SizedBox(height: 20.height),
+                  textImage(
+                    imageUrl: 'assets/images/user_profile_icon.png',
+                    text: 'My Profile',
+                  ),
+                  SizedBox(height: 10.height),
+                ],
               ),
             ),
-            SizedBox(height: 10.height),
             Divider(
               color: Colors.black.withOpacity(.5),
             ),
-            SizedBox(height: 10.height),
             GestureDetector(
               onTap: () async {
                 await addressCubit.getAddresses();
                 Navigator.pushNamed(context, AddressPage.routeName);
               },
-              child: textImage(
-                imageUrl: 'assets/images/address_icon.png',
-                text: 'My Addresses',
+              child: Column(
+                children: [
+                  SizedBox(height: 10.height),
+                  textImage(
+                    imageUrl: 'assets/images/address_icon.png',
+                    text: 'My Addresses',
+                  ),
+                  SizedBox(height: 10.height),
+                ],
               ),
             ),
-            SizedBox(height: 10.height),
             Divider(
               color: Colors.black.withOpacity(.5),
             ),
-            SizedBox(height: 10.height),
             GestureDetector(
               onTap: () async {
                 await storeCubit.getFavorites();
                 Navigator.pushNamed(context, FavoritePage.routeName);
               },
-              child: textImage(
-                imageUrl: 'assets/images/favorites_icon.png',
-                text: 'My Favorites',
+              child: Column(
+                children: [
+                  SizedBox(height: 10.height),
+                  textImage(
+                    imageUrl: 'assets/images/favorites_icon.png',
+                    text: 'My Favorites',
+                  ),
+                  SizedBox(height: 10.height),
+                ],
               ),
             ),
-            SizedBox(height: 10.height),
             Divider(
               color: Colors.black.withOpacity(.5),
             ),

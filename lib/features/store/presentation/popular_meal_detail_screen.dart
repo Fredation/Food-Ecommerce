@@ -9,10 +9,11 @@ import 'package:food_ecommerce/reusables/my_toast.dart';
 import 'package:food_ecommerce/reusables/reusable_text_small.dart';
 import '../../../reusables/reusable_icon.dart';
 import '../../../reusables/reusable_text_big.dart';
-import '../../../core/app_colors.dart';
 
 class PopularMealDetailScreen extends StatefulWidget {
   static const routeName = '/popular-meal';
+
+  const PopularMealDetailScreen({Key? key}) : super(key: key);
 
   @override
   State<PopularMealDetailScreen> createState() =>
@@ -31,6 +32,7 @@ class _PopularMealDetailScreenState extends State<PopularMealDetailScreen> {
 
     final loadedProduct = storeCubit.findById(productId);
 
+    //checks if the value of a product favorite status is true or false and toggles it respectfully
     for (var element in storeCubit.favorites) {
       if (element.id == loadedProduct.id) {
         isFav = true;
@@ -42,6 +44,7 @@ class _PopularMealDetailScreenState extends State<PopularMealDetailScreen> {
     }
 
     bool _isCartItem = false;
+    //checks if the product is already in cart by comparing the product title to the titles of all the products in cart
     for (var element in cartCubit.cart) {
       if (element.title == loadedProduct.title) {
         _isCartItem = true;
@@ -64,7 +67,8 @@ class _PopularMealDetailScreenState extends State<PopularMealDetailScreen> {
                   },
                 ),
                 GestureDetector(
-                  onTap: () {
+                  onTap: () async {
+                    await cartCubit.getCart();
                     Navigator.pushReplacementNamed(context, CartPage.routeName);
                   },
                   child: Container(
@@ -234,6 +238,7 @@ class _PopularMealDetailScreenState extends State<PopularMealDetailScreen> {
                           text: "Added To Cart",
                           isError: false);
                     }
+                    await cartCubit.getCart();
                   },
                   child: Container(
                     height: 50.height,

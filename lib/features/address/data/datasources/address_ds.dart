@@ -24,7 +24,6 @@ class AddressDSImpl implements AddressDS {
       state: address.state,
       street: address.street,
     ).toJson();
-    log(add.toString());
     try {
       await FirebaseFirestore.instance
           .collection('user_addresses/')
@@ -48,7 +47,6 @@ class AddressDSImpl implements AddressDS {
           .collection('/addresses')
           .get()
           .then((data) {
-        log(data.docs.length.toString());
         for (var addData in data.docs) {
           addresses.add(Address(
             id: addData.id,
@@ -60,7 +58,6 @@ class AddressDSImpl implements AddressDS {
           ));
         }
       });
-      log("loaded" + addresses.toString());
       return addresses;
     } catch (e) {
       log(e.toString());

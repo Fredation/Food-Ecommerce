@@ -24,6 +24,8 @@ class _FavoritePageState extends State<FavoritePage> {
   Widget build(BuildContext context) {
     final storeCubit = context.read<StoreCubit>();
     List<Product> products = [];
+
+    //iterates through the list of all products and favorite products, compares their favorite status and adds all those who are favorites to the empty list of product
     for (var element in storeCubit.favorites) {
       for (var prod in storeCubit.products) {
         if (prod.id == element.id && element.isFavorite == true) {
@@ -34,6 +36,7 @@ class _FavoritePageState extends State<FavoritePage> {
 
     return LoaderLayout(
       loading: storeCubit.state.isLoading,
+      overlay: true,
       child: Scaffold(
         appBar: MyAppBar(title: 'Favorites'),
         body: SingleChildScrollView(

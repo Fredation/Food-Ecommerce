@@ -25,7 +25,6 @@ class _ItemCounterWidgetState extends State<ItemCounterWidget> {
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
-        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           GestureDetector(
             onTap: () {
@@ -85,7 +84,7 @@ class _ItemCounterWidgetState extends State<ItemCounterWidget> {
 
   @override
   void initState() {
-    count = widget.count;
     super.initState();
+    count = widget.count;
   }
 }
