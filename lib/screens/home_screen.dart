@@ -1,3 +1,4 @@
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_ecommerce/core/size_config/extensions.dart';
@@ -27,7 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final checkout = context.read<CartCubit>();
     final addressCubit = context.read<AddressCubit>();
     return Scaffold(
-      drawer: AppDrawer(),
+      drawer: const AppDrawer(),
       body: SizedBox(
         child: Column(
           children: [
@@ -45,16 +46,18 @@ class _HomeScreenState extends State<HomeScreen> {
                   const SizedBox(height: 15),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    //crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Builder(builder: (context) {
-                        return GestureDetector(
+                      Builder(
+                        builder: (context) {
+                          return GestureDetector(
                             onTap: () => Scaffold.of(context).openDrawer(),
                             child: const Icon(
                               Icons.menu,
                               size: 40,
-                            ));
-                      }),
+                            ),
+                          );
+                        },
+                      ),
                       Center(
                         child: GestureDetector(
                           onTap: () async {
@@ -82,7 +85,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
             ),
-            Expanded(child: SingleChildScrollView(child: FoodPageBody())),
+            Expanded(
+              child: SingleChildScrollView(
+                child: FoodPageBody(),
+              ),
+            ),
           ],
         ),
       ),

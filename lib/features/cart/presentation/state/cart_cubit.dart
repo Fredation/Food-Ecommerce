@@ -34,9 +34,14 @@ class CartCubit extends Cubit<CartState> {
     required this.getRecipientUsecase,
   }) : super(const CartState());
 
-  List<Product> cart = [];
-  Address? cartAddress;
-  Recipient? recipient;
+  List<Product> _cart = [];
+  List<Product> get cart => _cart;
+
+  Address? _cartAddress;
+  Address? get cartAddress => _cartAddress;
+
+  Recipient? _recipient;
+  Recipient? get recipient => _recipient;
 
   Future<void> addToCart({required Product prod}) async {
     emit(state.copyWith(isLoading: true, error: null));
@@ -64,15 +69,15 @@ class CartCubit extends Cubit<CartState> {
     res.fold((l) {
       emit(state.copyWith(isLoading: false, error: l));
     }, (r) {
-      cart.clear();
-      cart.addAll(r);
+      _cart.clear();
+      _cart.addAll(r);
       emit(state.copyWith(isLoading: false, data: r));
     });
   }
 
   double getSubTotal() {
     final v =
-        cart.fold<double>(0, (sum, item) => sum + item.price * item.quantity);
+        _cart.fold<double>(0, (sum, item) => sum + item.price * item.quantity);
     emit(state.copyWith(data: v));
     return v;
   }
@@ -95,7 +100,7 @@ class CartCubit extends Cubit<CartState> {
     res.fold((l) {
       emit(state.copyWith(isLoading: false, error: l));
     }, (r) {
-      cartAddress = r;
+      _cartAddress = r;
       emit(state.copyWith(isLoading: false, data: r));
     });
   }
@@ -112,7 +117,7 @@ class CartCubit extends Cubit<CartState> {
     res.fold((l) {
       emit(state.copyWith(isLoading: false, error: l));
     }, (r) {
-      recipient = r;
+      _recipient = r;
       emit(state.copyWith(isLoading: false, data: r));
     });
   }
@@ -123,7 +128,7 @@ class CartCubit extends Cubit<CartState> {
     res.fold((l) {
       emit(state.copyWith(isLoading: false, error: l));
     }, (r) {
-      cartAddress = r;
+      _cartAddress = r;
       emit(state.copyWith(isLoading: false, data: r));
     });
   }
@@ -134,7 +139,7 @@ class CartCubit extends Cubit<CartState> {
     res.fold((l) {
       emit(state.copyWith(isLoading: false, error: l));
     }, (r) {
-      recipient = r;
+      _recipient = r;
       emit(state.copyWith(isLoading: false, data: r));
     });
   }

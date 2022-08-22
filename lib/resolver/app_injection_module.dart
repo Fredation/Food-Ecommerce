@@ -38,7 +38,6 @@ import 'package:food_ecommerce/features/store/domain/usecases/get_favorites_usec
 import 'package:food_ecommerce/features/store/domain/usecases/get_products_usecase.dart';
 import 'package:food_ecommerce/features/store/domain/usecases/toggle_fav_usecase.dart';
 import 'package:food_ecommerce/features/store/presentation/state/store_cubit.dart';
-import 'package:food_ecommerce/firebase_analytics.dart';
 import 'package:get_it/get_it.dart';
 import 'dart:async';
 

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:food_ecommerce/app_injection_component.dart';
 import 'package:food_ecommerce/app_setup.dart';
@@ -18,10 +19,7 @@ abstract class AppStart {
   final resolvers = <FeatureResolver>[
     AppResolver(),
   ];
-  static final FirebaseAnalytics _analytics = FirebaseAnalytics.instance;
 
-  static FirebaseAnalyticsObserver getAnalyticsObserver =
-      FirebaseAnalyticsObserver(analytics: _analytics);
   AppStart(this.buildConfig);
 
   Future<void> startApp() async {
@@ -40,9 +38,16 @@ abstract class AppStart {
         .registerModules(modules: injectionModule, buildConfig: buildConfig);
 
     await AppSetup().initStorage(injector.get());
+
     await Firebase.initializeApp();
 
     await runZonedGuarded<Future<void>>(() async {
+      final FirebaseAnalytics _analytics = FirebaseAnalytics.instance;
+
+      FirebaseAnalyticsObserver getAnalyticsObserver =
+          FirebaseAnalyticsObserver(analytics: _analytics);
+      FlutterError.onError =
+          FirebaseCrashlytics.instance.recordFlutterFatalError;
       runApp(
         MyApp(
           buildConfig: buildConfig,
@@ -51,6 +56,8 @@ abstract class AppStart {
           observer: getAnalyticsObserver,
         ),
       );
-    }, (onError, stackTrace) {});
+    },
+        (error, stack) => FirebaseCrashlytics.instance
+            .recordError(error, stack, fatal: true));
   }
 }

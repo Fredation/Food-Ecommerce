@@ -81,11 +81,12 @@ class _ImagePickerWidgetState extends State<ImagePickerWidget> {
                   ),
         TextButton.icon(
           style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all<Color>(Colors.transparent
-                //const Color.fromARGB(255, 161, 136, 127),
-                ),
+            backgroundColor:
+                MaterialStateProperty.all<Color>(Colors.transparent),
           ),
-          onPressed: _uploadImage,
+          onPressed: () {
+            _onPressedHandler(context);
+          },
           icon: Icon(
             Icons.image,
             color: Colors.brown[300],
@@ -101,6 +102,105 @@ class _ImagePickerWidgetState extends State<ImagePickerWidget> {
           ),
         ),
       ],
+    );
+  }
+
+  Future<dynamic> _onPressedHandler(BuildContext context) {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          content: SizedBox(
+            height: 150,
+            child: Column(
+              children: [
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    "Profile Photo Upload",
+                    style: TextStyle(
+                      fontFamily: 'Lato',
+                      fontSize: 20.width,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 5),
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      isGallery = false;
+                      _uploadImage();
+                    });
+                  },
+                  child: SizedBox(
+                    height: 50,
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        "Take Photo",
+                        style: TextStyle(
+                          fontFamily: 'Lato',
+                          fontSize: 18.width,
+                          fontWeight: FontWeight.w400,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      isGallery = true;
+                      _uploadImage();
+                    });
+                  },
+                  child: SizedBox(
+                    height: 30,
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        "Choose from Library",
+                        style: TextStyle(
+                          fontFamily: 'Lato',
+                          fontSize: 18.width,
+                          fontWeight: FontWeight.w400,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 10),
+                GestureDetector(
+                  onTap: () => Navigator.pop(context),
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child: Container(
+                      height: 30,
+                      width: 80,
+                      decoration: BoxDecoration(color: Colors.grey[100]),
+                      child: Center(
+                        child: Text(
+                          'CANCEL',
+                          style: TextStyle(
+                            fontFamily: 'Lato',
+                            fontSize: 18.width,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }

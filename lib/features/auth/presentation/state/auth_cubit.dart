@@ -38,9 +38,13 @@ class AuthCubit extends Cubit<AuthState> {
 
   FirebaseAuth auth = FirebaseAuth.instance;
 
-  User? user;
+  User? _user;
+  User? get user => _user;
+
   bool get isUserLoggedIn => _checkLogin();
-  UserData? userData;
+
+  UserData? _userData;
+  UserData? get userData => _userData;
 
   Future<void> register({
     required String email,
@@ -52,7 +56,7 @@ class AuthCubit extends Cubit<AuthState> {
     res.fold((l) {
       emit(state.copyWith(isLoading: false, error: l));
     }, (r) {
-      user = r;
+      _user = r;
       emit(state.copyWith(isLoading: false, data: r, user: r));
     });
   }
@@ -68,14 +72,14 @@ class AuthCubit extends Cubit<AuthState> {
       log(l.toString());
       emit(state.copyWith(isLoading: false, error: l));
     }, (r) {
-      user = r;
+      _user = r;
       emit(state.copyWith(isLoading: false, data: r, user: r));
     });
   }
 
   Future<void> logout() async {
     await logoutUsecase.logout();
-    user = null;
+    _user = null;
   }
 
   Future<void> saveUserToDB({
@@ -123,7 +127,7 @@ class AuthCubit extends Cubit<AuthState> {
     res.fold((l) {
       emit(state.copyWith(isLoading: false, error: l));
     }, (r) {
-      userData = r;
+      _userData = r;
       emit(state.copyWith(isLoading: false, data: r));
     });
   }

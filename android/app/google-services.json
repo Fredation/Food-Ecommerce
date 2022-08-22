@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "334111171960",
+    "firebase_url": "https://food-e-commerce-dd2e0-default-rtdb.firebaseio.com",
     "project_id": "food-e-commerce-dd2e0",
     "storage_bucket": "food-e-commerce-dd2e0.appspot.com"
   },
@@ -29,6 +30,13 @@
             {
               "client_id": "334111171960-o1o1issio3imdmmqkst5f4pc9cfj9dbs.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "334111171960-uh1vrhn7hmvcdt14id5abe49uq9hnf4v.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.santosenoque.cadevo"
+              }
             }
           ]
         }
