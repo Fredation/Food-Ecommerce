@@ -17,8 +17,7 @@ abstract class StoreDS {
 class StoreDSImpl implements StoreDS {
   FirebaseAuth auth = FirebaseAuth.instance;
   final Storage storage;
-  final Api api;
-  StoreDSImpl({required this.storage, required this.api});
+  StoreDSImpl({required this.storage});
 
   @override
   Future<List<Product>> getProducts() async {

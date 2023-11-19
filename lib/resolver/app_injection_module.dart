@@ -47,7 +47,7 @@ class AppInjectionModule implements InjectionModule {
       {required GetIt injector, required BuildConfig buildConfig}) {
     injector.registerLazySingleton<Storage>(() => StorageImpl());
 
-    injector.registerLazySingleton(() => Api(buildConfig: buildConfig));
+    // injector.registerLazySingleton(() => Api(buildConfig: buildConfig));
 
     //features
     injector.registerFactory(
@@ -129,7 +129,7 @@ class AppInjectionModule implements InjectionModule {
       () => AuthDSImpl(storage: injector()),
     );
     injector.registerLazySingleton<StoreDS>(
-      () => StoreDSImpl(storage: injector(), api: injector()),
+      () => StoreDSImpl(storage: injector()),
     );
     injector.registerLazySingleton<CartDS>(
       () => CartDSImpl(),
